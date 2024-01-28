@@ -11,7 +11,6 @@ const newMessage = async (history, message) => {
     model: 'gpt-3.5-turbo',
     messages: [...history, message],
   })
-
   return results.choices[0].message
 }
 
@@ -44,6 +43,5 @@ const chat = () => {
 
   start()
 }
-
 console.log('Chatbot started... Type exit to end of chat')
 chat()
