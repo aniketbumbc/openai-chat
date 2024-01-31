@@ -43,5 +43,6 @@ const chat = () => {
 
   start()
 }
-console.log('Chatbot started... Type exit to end of chat')
+
+console.log('Chatbot started enter message... Type exit to end of chat')
 chat()
