@@ -37,10 +37,42 @@ const docsFromPdf = (video) => {
   )
 }
 
-const loadStore = () => {
-    const videDocs = await docsFromYoutube(video)
-    const pdfDocs = await docsFromPdf()
-
-    return createStore([...videDocs, ...pdfDocs])
+const loadStore = async () => {
+  const videDocs = await docsFromYoutube(video)
+  const pdfDocs = await docsFromPdf()
+  return createStore([...videDocs, ...pdfDocs])
 }
 
+const query = async () => {
+  const store = await loadStore()
+  const results = await store.similaritySearch(question, 2)
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    temperature: 0,
+    messages: [
+      {
+        role: 'assistant',
+        content:
+          'You are a helpful AI assistant. Anwer questions to your best ability.',
+      },
+      {
+        role: 'user',
+        content: `Anwers the following question using the provide context. If you don't have context please say need more context.
+        Question:${question}
+        Context: ${results.map((r) => r.pageContent).join('\n')}
+        `,
+      },
+    ],
+  })
+
+  console.log(
+    `Answers: Hellooo, ${
+      response.choices[0].message.content
+    }\n\nSources: ${results.map((r) => r.metadata.source).join(', ')}`
+  )
+}
+
+query()
+
+// https://llamahub.ai/
