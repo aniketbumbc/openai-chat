@@ -15,11 +15,18 @@ const functions = {
   calculate({ expression }) {
     return math.evaluate(expression)
   },
+
+  async generateImage({ prompt }) {
+    const images = await openai.images.generate({ prompt })
+    console.log(prompt)
+    console.log(images)
+    return images.data[0].url
+  },
 }
 
 const getResults = (message) => {
   return openai.chat.completions.create({
-    model: 'gpt-3.5-turbo-16k-0613',
+    model: 'gpt-3.5-turbo',
     messages,
     temperature: 0,
     functions: [
@@ -35,6 +42,21 @@ const getResults = (message) => {
             },
           },
           required: ['expression'],
+        },
+      },
+
+      {
+        name: 'generateImage',
+        description: 'get image based on description',
+        parameters: {
+          type: 'object',
+          properties: {
+            prompt: {
+              type: 'string',
+              description: 'decription of the image to get',
+            },
+          },
+          required: ['prompt'],
         },
       },
     ],
