@@ -25,6 +25,7 @@ const functions = {
 }
 
 const getResults = (message) => {
+  //Step 1: send the conversation and available functions to the model
   return openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages,
@@ -71,12 +72,14 @@ while (true) {
     console.log(response.choices[0].message.content)
     break
   } else if (response.choices[0].finish_reason == 'function_call') {
-    const fName = response.choices[0].message.function_call.name
-    const args = response.choices[0].message.function_call.arguments
+    // Step 2: Check Gpt wants to call a functions
+    const fName = response.choices[0].message.function_call.name // get function name
+    const args = response.choices[0].message.function_call.arguments // get arguments
 
-    const functionToCall = functions[fName]
-    const params = JSON.parse(args)
+    const functionToCall = functions[fName] // return functoins
+    const params = JSON.parse(args) // parse the args from here.
 
+    // Step 3: Call the functions with params
     const result = functionToCall(params)
 
     messages.push({
@@ -88,6 +91,7 @@ while (true) {
       },
     })
 
+    // Step 4: Append response message and functions
     messages.push({
       role: 'function',
       name: fName,
