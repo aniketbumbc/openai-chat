@@ -1,0 +1,11 @@
+Weather data for Mumbai:
+
+Temperature: 32.99°C
+Feels Like: 32.13°C
+Minimum Temperature: 28.94°C
+Maximum Temperature: 32.99°C
+Pressure: 1016 hPa
+Humidity: 31%
+Visibility: 2500 meters
+Wind Speed: 4.63 m/s
+Description: Smoke

@@ -1,5 +1,6 @@
 import { openai } from './openai.js'
 import { getWeather } from './weather.js'
+import fs from 'fs'
 
 const QUESTION = process.argv[2] || 'Hi'
 
@@ -16,6 +17,29 @@ const getWeatherData = {
     },
     required: ['city'],
   },
+}
+
+const saveToFileFunction = {
+  name: 'saveToFile',
+  description: 'save content to a file',
+  parameters: {
+    type: 'object',
+    properties: {
+      name: {
+        type: 'string',
+        description: 'The name of the file',
+      },
+      content: {
+        type: 'string',
+        description: 'The content to save',
+      },
+    },
+  },
+  required: ['name', 'content'],
+}
+
+function saveToFile(name, content) {
+  fs.writeFileSync(name, content)
 }
 
 async function callChatGpt() {
@@ -37,7 +61,7 @@ async function callChatGpt() {
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages,
-      functions: [getWeatherData],
+      functions: [getWeatherData, saveToFileFunction],
     })
 
     let respMsg = response.choices[0].message
@@ -58,6 +82,9 @@ async function callChatGpt() {
       })
 
       console.log('final', messages)
+    } else if (respMsg.function_call?.name === 'saveToFile') {
+      const args = JSON.parse(respMsg.function_call.arguments)
+      saveToFile(args.name, args.content)
     } else if (response.choices[0].finish_reason === 'stop') {
       return respMsg
     }
