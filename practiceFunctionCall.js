@@ -1,10 +1,6 @@
 import 'dotenv/config'
 import { openai } from './openai.js'
 
-// const functions = {
-//
-// }
-
 function helloWorld(text) {
   let hello = 'Hello World! ' + appString
   return hello
