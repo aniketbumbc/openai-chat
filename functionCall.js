@@ -96,3 +96,5 @@ const finalMessage = await callChatGpt()
 console.log('****** Final Response ', finalMessage.content, '**********')
 
 //https://www.youtube.com/watch?v=i-oHvHejdsc
+
+//https://www.youtube.com/watch?v=6yKAeKC7KdA
