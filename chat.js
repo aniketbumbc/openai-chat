@@ -44,5 +44,7 @@ const chat = () => {
   start()
 }
 
+// Simple chat bot
+
 console.log('Chatbot started enter message... Type exit to end of chat')
 chat()
