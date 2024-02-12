@@ -77,3 +77,4 @@ query()
 
 // https://llamahub.ai/
 //https://github.com/run-llama/llama-hub/tree/2c95b021246b54b0542bf9ed9289828cc9da6654/llama_hub/file/pdf
+//https://github.com/run-llama/llama-hub/tree/2c95b021246b54b0542bf9ed9289828cc9da6654/llama_hub/llama_packs/evaluator_benchmarker
