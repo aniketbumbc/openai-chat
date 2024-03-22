@@ -1,6 +1,6 @@
 import 'dotenv/config'
 /**
- *  Getting weather information.
+ *  Getting weather information. from open weather api
  */
 export async function getWeather(city) {
   const apiKey = process.env.WEAHER_API_KEY
